@@ -93,6 +93,64 @@ T ListArray<T>::operator[](int pos){
 	return get(pos);
 }
 
+//Metdods de List.h
+template <typename T>
+void ListArray<T>::insert(int pos, T e){
+        if(pos < 0 || pos > n){
+		throw std::out_of_range("Posición invalida");
+	}
+	if(n == max){
+		resize(max*2);
+	}
+	for(int i = n; i > pos; i--){
+		arr[i]= arr[i-1];
+	}
+	arr[pos] = e;
+	n++;
+}
+
+template <typename T>
+void ListArray<T>::append(T e){
+        insert(n, e);
+}
+
+template <typename T>
+void ListArray<T>::prepend(T e){
+        insert(0, e);
+}
+
+template <typename T>
+T ListArray<T>::remove(int pos){
+        if(pos < 0 || pos > n){
+                throw std::out_of_range("Posición invalida");
+        }
+	T e = arr[pos];
+	for(int i = pos; i < n -1; i++){
+		arr[i] = arr[i+1];
+	}
+	n--;
+	if(n < max / 4 && max / 2 >= MINSIZE){
+		resize(max / 2);
+	}
+	return e;
+
+}
+
+template <typename T>
+int ListArray<T>::search(T e){
+        for(int i = 0; i < n; i++){
+		if(arr[i] == e){
+			return i;
+		}
+	}
+	return -1;
+}
+
+
+
+
+
+
 #endif
 
 
